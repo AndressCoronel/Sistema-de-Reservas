@@ -42,32 +42,37 @@ export default function AppointmentForm({ selectedSlot, barbers, onSubmit, onCan
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="space-y-6">
       {/* Selected Slot Info */}
-      <div className="border-l-4 border-yellow-400 bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded-r-lg">
-        <p className="font-semibold text-sm text-yellow-800 dark:text-yellow-300">
-          Tu turno: {formatDate(selectedSlot.date)}
-        </p>
-        <p className="text-2xl font-bold text-yellow-900 dark:text-yellow-200">
-          {selectedSlot.time}
-        </p>
+      <div className="border border-gold-500/20 bg-gold-500/5 p-4 rounded-xl flex items-center justify-between">
+        <div>
+          <p className="text-xs font-semibold text-gold-500 uppercase tracking-widest mb-1">
+            Tu turno
+          </p>
+          <p className="text-xl font-bold text-white">
+            {selectedSlot.time}
+          </p>
+        </div>
+        <div className="text-right">
+          <p className="text-sm text-zinc-400">
+            {formatDate(selectedSlot.date)}
+          </p>
+        </div>
       </div>
 
       {/* Barber Selection */}
       {barbers.length > 1 && (
         <div>
-          <label htmlFor="barber-select" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">
+          <label htmlFor="barber-select" className="block text-sm font-medium text-zinc-400 mb-2 uppercase tracking-wide">
             Barbero de preferencia
           </label>
           <select
-            id="barber-select"
-            value={selectedBarberId || ''}
-            onChange={(e) => setSelectedBarberId(e.target.value ? Number(e.target.value) : undefined)}
-            className="w-full px-3 py-2 border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500"
+            className="w-full px-4 py-3 border border-zinc-700 bg-zinc-800 text-white rounded-xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none transition-all appearance-none"
+            style={{ backgroundImage: 'none' }} // Remove default arrow if customized later, or keep standard
           >
-            <option value="">Cualquiera disponible</option>
+            <option value="" className="bg-zinc-800 text-zinc-400">Cualquiera disponible</option>
             {barbers.map((barber) => (
-              <option key={barber.id} value={barber.id}>
+              <option key={barber.id} value={barber.id} className="bg-zinc-800 text-white">
                 {barber.name}
               </option>
             ))}
@@ -77,7 +82,7 @@ export default function AppointmentForm({ selectedSlot, barbers, onSubmit, onCan
 
       {/* Name Input */}
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">
+        <label htmlFor="name" className="block text-sm font-medium text-zinc-400 mb-2 uppercase tracking-wide">
           Nombre y Apellido *
         </label>
         <input
@@ -86,14 +91,14 @@ export default function AppointmentForm({ selectedSlot, barbers, onSubmit, onCan
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
-          className="w-full px-3 py-2 border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500"
-          placeholder="Tu nombre completo"
+          className="w-full px-4 py-3 border border-zinc-700 bg-zinc-800 text-white rounded-xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none transition-all placeholder:text-zinc-600"
+          placeholder="Ej: Juan Pérez"
         />
       </div>
 
       {/* Phone Input */}
       <div>
-        <label htmlFor="phone" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">
+        <label htmlFor="phone" className="block text-sm font-medium text-zinc-400 mb-2 uppercase tracking-wide">
           Teléfono *
         </label>
         <input
@@ -102,24 +107,24 @@ export default function AppointmentForm({ selectedSlot, barbers, onSubmit, onCan
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           required
-          className="w-full px-3 py-2 border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 rounded-md focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500"
-          placeholder="Tu número de teléfono"
+          className="w-full px-4 py-3 border border-zinc-700 bg-zinc-800 text-white rounded-xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none transition-all placeholder:text-zinc-600"
+          placeholder="Ej: 11 1234 5678"
         />
       </div>
 
       {/* Buttons */}
-      <div className="flex flex-col-reverse sm:flex-row gap-3 pt-2">
+      <div className="flex flex-col-reverse sm:flex-row gap-4 pt-4">
         <button
           type="button"
           onClick={onCancel}
-          className="w-full sm:w-auto flex-1 px-4 py-2.5 border border-zinc-300 dark:border-zinc-600 text-zinc-700 dark:text-zinc-300 font-semibold rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+          className="w-full sm:w-auto flex-1 px-6 py-3 border border-zinc-700 text-zinc-400 font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-zinc-800 hover:text-white transition-colors"
         >
           Cancelar
         </button>
         <button
           type="submit"
           disabled={isSubmitting || isLoading}
-          className="w-full sm:w-auto flex-1 px-4 py-2.5 bg-yellow-400 text-zinc-900 font-bold rounded-lg hover:bg-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+          className="w-full sm:w-auto flex-1 px-6 py-3 bg-gold-500 text-black font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-white transition-all disabled:opacity-50 disabled:cursor-not-allowed transform hover:translate-y-px"
         >
           {isSubmitting ? 'Confirmando...' : 'Confirmar Reserva'}
         </button>

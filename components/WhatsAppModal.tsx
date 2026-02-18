@@ -23,8 +23,8 @@ export default function WhatsAppModal({ onClose }: WhatsAppModalProps) {
 
           {/* Icon */}
           <div className="mb-5 flex justify-center">
-            <div className="w-16 h-16 rounded-full bg-yellow-100 dark:bg-zinc-800 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-yellow-500 dark:text-yellow-400">
+            <div className="w-16 h-16 rounded-full bg-amber-100 dark:bg-zinc-800 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-amber-500 dark:text-amber-400">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
               </svg>
             </div>
@@ -43,7 +43,7 @@ export default function WhatsAppModal({ onClose }: WhatsAppModalProps) {
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center w-full bg-yellow-400 text-zinc-900 font-bold px-6 py-3 rounded-lg shadow-md hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-500 focus:ring-opacity-50 transition-all mb-3"
+            className="inline-flex items-center justify-center w-full bg-amber-400 text-zinc-900 font-bold px-6 py-3 rounded-lg shadow-md hover:bg-amber-500 focus:outline-none focus:ring-4 focus:ring-amber-500 focus:ring-opacity-50 transition-all mb-3"
             onClick={onClose}
           >
             Abrir WhatsApp

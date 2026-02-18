@@ -1,21 +1,60 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --color-gold-500: #d4af37;
+  --color-gold-600: #b5952f;
+  --color-gold-400: #f3c84f;
+
+  --color-zinc-950: #0a0a0a;
+  --color-zinc-900: #18181b;
+  --color-zinc-800: #27272a;
 }
 
-@media (prefers-color-scheme: dark) {
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+/* Force dark mode style by default for premium feel, or support system pref */
+@media (prefers-color-scheme: light) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Even in light mode, keep it slightly off-white for premium feel, 
+       but for a barbershop, dark is often preferred. 
+       Let's stick to a dark theme as the primary identity if possible,
+       or a very clean high-contrast light theme.
+       For now, let's make light mode refined. */
+    --background: #ffffff;
+    --foreground: #171717;
+  }
+}
+
+/* Custom Premium Utilities */
+@layer utilities {
+  .text-gold {
+    color: var(--color-gold-500);
+  }
+
+  .bg-gold {
+    background-color: var(--color-gold-500);
+  }
+
+  .border-gold {
+    border-color: var(--color-gold-500);
+  }
+
+  .hover-bg-gold-600:hover {
+    background-color: var(--color-gold-600);
+  }
+
+  .glass-panel {
+    background: rgba(24, 24, 27, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
   }
 }
 
@@ -23,4 +62,35 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.delay-100 {
+  animation-delay: 100ms;
+}
+
+.delay-200 {
+  animation-delay: 200ms;
+}
+
+.delay-300 {
+  animation-delay: 300ms;
 }

@@ -3,16 +3,8 @@
 import { config } from '@/lib/config'
 
 interface ServiceSelectionProps {
-  onSelect: (service: 'corte' | 'tinte') => void
-  selectedService: 'corte' | 'tinte' | null
-}
-
-const formatPrice = (price: number) => {
-  return new Intl.NumberFormat('es-AR', {
-    style: 'currency',
-    currency: 'ARS',
-    minimumFractionDigits: 0,
-  }).format(price)
+  onSelect: (service: 'corte' | 'tinte' | 'barba') => void
+  selectedService: 'corte' | 'tinte' | 'barba' | null
 }
 
 const ServiceCard = ({
@@ -30,78 +22,88 @@ const ServiceCard = ({
   price: number;
   ctaText: string;
   icon: React.ElementType;
-  isSelected: boolean;
+  isSelected?: boolean;
 }) => (
   <button
     onClick={onClick}
-    className={`group w-full text-left p-6 rounded-2xl border transition-all
-                ${isSelected 
-                  ? 'border-yellow-400 dark:border-yellow-500 bg-yellow-50 dark:bg-zinc-800/50 ring-2 ring-yellow-400 dark:ring-yellow-500' 
-                  : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:border-yellow-400 dark:hover:border-yellow-500 hover:bg-yellow-50 dark:hover:bg-zinc-800/50'
-                }`}
+    className={`group relative w-full text-left p-8 rounded-2xl border transition-all duration-300 overflow-hidden
+                ${isSelected
+        ? 'border-gold-500 bg-zinc-900 shadow-[0_0_30px_-10px_rgba(212,175,55,0.3)]'
+        : 'border-white/5 bg-zinc-900/40 hover:border-gold-500/50 hover:bg-zinc-900/80 hover:shadow-xl'
+      }`}
   >
-    <div className="flex items-start gap-5">
-      <div className="mt-1">
-        <Icon />
+    {/* Background Glow Effect */}
+    <div className={`absolute inset-0 bg-gradient-to-br from-gold-500/5 to-transparent opacity-0 transition-opacity duration-500 ${isSelected ? 'opacity-100' : 'group-hover:opacity-100'}`} />
+
+    <div className="relative z-10 flex items-start gap-6">
+      <div className={`p-4 rounded-xl transition-all duration-300 ${isSelected ? 'bg-gold-500 text-black' : 'bg-zinc-800 text-gold-500 group-hover:bg-gold-500 group-hover:text-black'}`}>
+        <Icon className="w-8 h-8" />
       </div>
+
       <div className="flex-1">
-        <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-1">
+        <h3 className={`text-xl font-bold mb-2 transition-colors ${isSelected ? 'text-white' : 'text-zinc-200 group-hover:text-white'}`}>
           {serviceName}
         </h3>
-        <p className="text-zinc-600 dark:text-zinc-400 text-sm mb-3">
+        <p className="text-zinc-400 text-sm mb-6 leading-relaxed group-hover:text-zinc-300 transition-colors">
           {description}
         </p>
-        <span className="text-2xl font-semibold text-zinc-800 dark:text-zinc-200">
-          {formatPrice(price)}
-        </span>
-      </div>
-      <div className="mt-1 text-zinc-400 dark:text-zinc-600 group-hover:text-yellow-500 dark:group-hover:text-yellow-400 transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
+
+        <div className="flex items-center justify-between border-t border-white/5 pt-4">
+          <span className={`text-2xl font-bold ${isSelected ? 'text-gold-500' : 'text-zinc-100'}`}>
+            {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', minimumFractionDigits: 0 }).format(price)}
+          </span>
+          <span className={`text-xs font-bold uppercase tracking-widest flex items-center gap-2 ${isSelected ? 'text-gold-500' : 'text-zinc-500 group-hover:text-gold-500'}`}>
+            {ctaText}
+            <svg className={`w-4 h-4 transition-transform duration-300 ${isSelected || 'group-hover:translate-x-1'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+          </span>
+        </div>
       </div>
     </div>
   </button>
 )
 
-const ScissorsIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-zinc-500 dark:text-zinc-400 group-hover:text-yellow-500 dark:group-hover:text-yellow-400 transition-colors">
-    <circle cx="6" cy="6" r="3"></circle>
-    <circle cx="6" cy="18" r="3"></circle>
-    <line x1="20" y1="4" x2="8.12" y2="15.88"></line>
-    <line x1="14.47" y1="14.47" x2="20" y2="20"></line>
-    <line x1="8.12" y1="8.12" x2="12" y2="12"></line>
-  </svg>
+const ScissorsIcon = (props: React.ComponentProps<'svg'>) => (
+  <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.121 15.536c-1.171 1.952-3.07 1.952-4.242 0-1.172-1.953-1.172-5.119 0-7.072 1.171-1.952 3.07-1.952 4.242 0M8 10.5h4m-4 3h4m9-1.5a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
 )
 
-const PaintBrushIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-zinc-500 dark:text-zinc-400 group-hover:text-yellow-500 dark:group-hover:text-yellow-400 transition-colors">
-    <path d="M12.22 2h-.44a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"></path>
-    <path d="M18 10a4 4 0 0 1 .8-2.5c.4-.9.4-2 .2-3 .1.5-.2 1.4-.7 2.2"></path>
-    <path d="M7 10a4 4 0 0 0-.8-2.5C5.8 6.6 5.8 5.5 6 4.5c-.1.5.2 1.4.7 2.2"></path>
-    <path d="M18 15h-1a2 2 0 0 1-2-2v-2h-4v2a2 2 0 0 1-2 2H7a2 2 0 0 0-2 2v2h14v-2a2 2 0 0 0-2-2z"></path>
-  </svg>
+const BeardIcon = (props: React.ComponentProps<'svg'>) => (
+  <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+)
+
+const PaintIcon = (props: React.ComponentProps<'svg'>) => (
+  <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg>
 )
 
 export default function ServiceSelection({ onSelect, selectedService }: ServiceSelectionProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="flex flex-col gap-6 animate-fade-in">
       <ServiceCard
         onClick={() => onSelect('corte')}
         serviceName={config.messages.serviceCorte}
         description={config.messages.serviceCorteDescription}
         price={config.prices.corte}
-        ctaText="Reservar ahora"
+        ctaText="Seleccionar"
         icon={ScissorsIcon}
         isSelected={selectedService === 'corte'}
       />
+
+      <ServiceCard
+        onClick={() => onSelect('barba')}
+        serviceName="Barba & Afeitado"
+        description="Perfilado perfecto y cuidado de la piel con toalla caliente."
+        price={config.prices.barba || 8000}
+        ctaText="Seleccionar"
+        icon={BeardIcon}
+        isSelected={selectedService === 'barba'}
+      />
+
       <ServiceCard
         onClick={() => onSelect('tinte')}
         serviceName={config.messages.serviceTinte}
         description={config.messages.serviceTinteDescription}
         price={config.prices.tinte}
-        ctaText="Coordinar por WhatsApp"
-        icon={PaintBrushIcon}
+        ctaText="Consultar por WhatsApp"
+        icon={PaintIcon}
         isSelected={selectedService === 'tinte'}
       />
     </div>
